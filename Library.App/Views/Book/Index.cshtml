@@ -1,0 +1,91 @@
+﻿@model BooksPagedResult
+
+@{
+    ViewData["Title"] = "წიგნები";
+    var isAuthenticated = User!.Identity!.IsAuthenticated;
+    var userRole = User.FindFirst("role")?.Value;
+    var isAdmin = userRole == "Admin";
+    var userId = User.FindFirst("userId")?.Value;
+}
+
+<div class="container mt-4 header-title">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">წიგნები</h2>
+        @if (isAuthenticated)
+        {
+            <button class="btn btn-success" onclick="showCreateBookModal()">ახლის დამატება +</button>
+        }
+    </div>
+</div>
+
+<div class="row mb-4 justify-content-end">
+    <div class="col-md-4">
+        <form method="get" asp-action="Index">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="საძიებო სიტყვა" name="searchQuery" value="@ViewContext.HttpContext.Request.Query["searchQuery"]">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit">ძებნა</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>სათაური</th>
+            <th>აღწერა</th>
+            <th>დეტალები</th>
+            @if (isAuthenticated)
+            {
+                <th>მართვა</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+            string bookAuthorNames = book.Authors != null && book.Authors.Any()
+                ? string.Join(", ", book.Authors.Select(author => $"{author.FirstName} {author.LastName}"))
+                : "ავტორი არ მოიძებნა.";
+                
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Description</td>
+                <td>
+                    <button class="btn btn-secondary" onclick="showDetailsBookModal('@book.Id', '@book.Title', '@book.Description', '@book.Image', '@book.Rating', '@book.Status', '@bookAuthorNames')">დაწვრილებით</button>
+                    @if (isAuthenticated)
+                    {
+                        if (book.Status == BookStatus.ხელმისაწვდომია)
+                        {
+                            <button class="btn btn-info" onclick="showTakeOutBookModal('@book.Id')">გატანა</button>
+                        }
+
+                        if (book.Status == BookStatus.გატანილია)
+                        {
+                            <button class="btn btn-success" onclick="showBringInBookModal('@book.Id')">დაბრუნება</button>
+                        }
+                    }
+                </td>
+                @if (isAdmin || userId == book.CreatorId)
+                {
+                    <td>
+                        <button class="btn btn-primary" onclick="showUpdateBookModal('@book.Id', '@book.Title', '@book.Description', '@book.Image', '@book.Rating', '@book.Authors?.Select(x => x.Id)')">რედაქტირება</button>
+                        <button class="btn btn-danger" onclick="showDeleteBookModal('@book.Id')">წაშლა</button>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    await Html.RenderPartialAsync("_PaginationPartial");
+    await Html.RenderPartialAsync("_DetailsBookModal");
+    await Html.RenderPartialAsync("_CreateBookModal");
+    await Html.RenderPartialAsync("_UpdateBookModal");
+    await Html.RenderPartialAsync("_DeleteBookModal");
+    await Html.RenderPartialAsync("_TakeOutBookModal");
+    await Html.RenderPartialAsync("_BringInBookModal");
+}

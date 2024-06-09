@@ -1,0 +1,31 @@
+﻿<div id="createAuthorModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">ავტორის დამატება</h5>
+                <button id="cancelCreateAuthor" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-action="Create">
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="createFirstName">სახელი</label>
+                        <input type="text" class="form-control" id="createFirstName" name="FirstName" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="createLastName">გვარი</label>
+                        <input type="text" class="form-control" id="createLastName" name="LastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="createDateOfBirth">დაბადების თარიღი</label>
+                        <input type="date" class="form-control" id="createDateOfBirth" name="DateOfBirth" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">დამატება</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

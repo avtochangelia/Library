@@ -1,0 +1,25 @@
+﻿@model UserViewModel
+
+@{
+    ViewData["Title"] = "ჩემი პროფილი";
+}
+
+<div class="account-form">
+    <h3>ჩემი პროფილი</h3>
+    <dl class="row mt-5">
+        <dt class="col-sm-3">სახელი:</dt>
+        <dd class="col-sm-9">@(!string.IsNullOrEmpty(Model.User.FirstName) ? Model.User.FirstName : "---")</dd>
+
+        <dt class="col-sm-3">გვარი:</dt>
+        <dd class="col-sm-9">@(!string.IsNullOrEmpty(Model.User.LastName) ? Model.User.LastName : "---")</dd>
+
+        <dt class="col-sm-3">იუზერი:</dt>
+        <dd class="col-sm-9">@Model.User.UserName</dd>
+
+        <dt class="col-sm-3">ელ.ფოსტა:</dt>
+        <dd class="col-sm-9">@Model.User.Email</dd>
+    </dl>
+
+    <a asp-controller="Account" asp-action="ChangePassword" class="btn btn-primary mt-3">პაროლის შეცვლა</a>
+    <a asp-controller="Identity" asp-action="Logout" class="btn btn-danger mt-3">გასვლა</a>
+</div>

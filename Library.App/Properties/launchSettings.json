@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "LibraryApp": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:3001;http://localhost:3000",
+      "dotnetRunMessages": true
+    }
+  }
+}

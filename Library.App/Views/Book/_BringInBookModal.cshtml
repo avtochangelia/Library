@@ -1,0 +1,21 @@
+﻿<div id="bringInBookModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">წიგნის დაბრუნება</h5>
+                <button id="cancelBringInBook" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-action="BringIn">
+                <div class="modal-body">
+                    <p>დარწმუნებული ხართ, რომ გსურთ ამ წიგნის დაბრუნება?</p>
+                    <input type="hidden" id="bringInBookId" name="Id" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">დადასტურება</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

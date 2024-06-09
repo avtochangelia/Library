@@ -1,0 +1,21 @@
+﻿<div id="deleteAuthorModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">წაშალე ავტორი</h5>
+                <button id="cancelAuthorDelete" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-action="Delete">
+                <div class="modal-body">
+                    <p>დარწმუნებული ხართ, რომ გსურთ ამ ავტორის წაშლა?</p>
+                    <input type="hidden" id="deleteAuthorId" name="Id" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">დადასტურება</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

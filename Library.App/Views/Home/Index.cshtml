@@ -1,0 +1,41 @@
+﻿@model UserViewModel
+
+@{
+    ViewData["Title"] = "მთავარი გვერდი";
+    var isAuthenticated = User!.Identity!.IsAuthenticated;
+    var userRole = User.FindFirst("role")?.Value;
+    var isAdmin = userRole == "Admin";
+    var userName = User.FindFirst("userName")?.Value;
+}
+
+@if (!isAuthenticated)
+{
+    <div class="account-form mt-3">
+        <h3>ავტორიზაცია</h3>
+        <form asp-controller="Identity" asp-action="Login" method="post">
+            <div class="form-group mt-3">
+                <label for="userName">მომხმარებლის სახელი</label>
+                <input type="text" class="form-control" id="userName" name="userName" required />
+            </div>
+            <div class="form-group mt-3">
+                <label for="password">პაროლი</label>
+                <input type="password" class="form-control" id="password" name="password" required />
+            </div>
+            <button type="submit" class="btn btn-primary mt-4">შესვლა</button>
+            <button class="btn btn-link mt-4" asp-controller="Identity" asp-action="Register">რეგისტრაცია</button>
+        </form>
+
+        <hr />
+        <h6 class="fw-bold mt-4">ბაზაში გასიდული ადმინი:</h6>
+        <p>Username: Admin<br />Password: Admin123$</p>
+    </div>
+}
+else
+{
+    <div class="account-form">
+        <h3>იუზერი: @userName (@userRole)</h3>
+        <br /><br />
+        <a asp-controller="Account" asp-action="Index" class="btn btn-primary">ჩემი პროფილი</a>
+        <a asp-controller="Identity" asp-action="Logout" class="btn btn-danger">გასვლა</a>
+    </div>
+}

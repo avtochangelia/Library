@@ -1,0 +1,72 @@
+﻿@model AuthorsPagedResult
+
+@{
+    ViewData["Title"] = "ავტორები";
+    var isAuthenticated = User!.Identity!.IsAuthenticated;
+    var userRole = User.FindFirst("role")?.Value;
+    var isAdmin = userRole == "Admin";
+    var userId = User.FindFirst("userId")?.Value;
+}
+
+<div class="container mt-4 header-title">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">ავტორები</h2>
+        @if (isAuthenticated)
+        {
+            <button class="btn btn-success" onclick="showCreateAuthorModal()">ახლის დამატება +</button>
+        }
+    </div>
+</div>
+
+<div class="row mb-4 justify-content-end">
+    <div class="col-md-4">
+        <form method="get" asp-action="Index">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="საძიებო სიტყვა" name="searchQuery" value="@ViewContext.HttpContext.Request.Query["searchQuery"]">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit">ძებნა</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>სახელი</th>
+            <th>გვარი</th>
+            <th>დაბადების თარიღი</th>
+            @if (isAuthenticated)
+            {
+                <th>მართვა</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var author in Model.Authors)
+        {
+            <tr>
+                <td>@author.FirstName</td>
+                <td>@author.LastName</td>
+                <td>@author.DateOfBirth.ToShortDateString()</td>
+                @if (isAdmin || userId == author.CreatorId)
+                {
+                    <td>
+                        <button class="btn btn-primary" onclick="showUpdateAuthorModal('@author.Id', '@author.FirstName', '@author.LastName', '@author.DateOfBirth')">რედაქტირება</button>
+                        <button class="btn btn-danger" onclick="showDeleteAuthorModal('@author.Id')">წაშლა</button>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="createAuthorModalContainer"></div>
+
+@{
+    await Html.RenderPartialAsync("_PaginationPartial");
+    await Html.RenderPartialAsync("_CreateAuthorModal");
+    await Html.RenderPartialAsync("_UpdateAuthorModal");
+    await Html.RenderPartialAsync("_DeleteAuthorModal");
+}

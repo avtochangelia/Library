@@ -1,0 +1,50 @@
+﻿<div id="updateBookModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">რედაქტირება</h5>
+                <button id="cancelUpdateBook" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="updateForm" method="post" asp-action="Update">
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="updateAuthorId">ID</label>
+                        <input type="text" class="form-control" id="updateBookId" name="Id" readonly>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="updateTitle">დასახელება</label>
+                        <input type="text" class="form-control" id="updateTitle" name="Title" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="updateDescription">აღწერა</label>
+                        <textarea class="form-control" id="updateDescription" name="Description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="updateImage">სურათის ლინკი</label>
+                        <input type="text" class="form-control" id="updateImage" name="Image" pattern="https?://.+">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="updateRating">რეიტინგი</label>
+                        <input type="number" class="form-control" id="updateRating" name="Rating" min="0" max="5" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateAuthorIds">აირჩიე ავტორები</label>
+                        <select class="form-control" id="updateAuthorIds" name="AuthorIds" multiple>
+                            @foreach (var author in Model.AllAuthors)
+                            {
+                                <option value="@author.Id">
+                                    @author.FirstName @author.LastName
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">რედაქტირება</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿<div id="updateAuthorModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">რედაქტირება</h5>
+                <button id="cancelAuthorUpdate" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-action="Update">
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="updateAuthorId">ID</label>
+                        <input type="text" class="form-control" id="updateAuthorId" name="Id" readonly>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="updateFirstName">სახელი</label>
+                        <input type="text" class="form-control" id="updateFirstName" name="FirstName" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="updateLastName">გვარი</label>
+                        <input type="text" class="form-control" id="updateLastName" name="LastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateDateOfBirth">დაბადების თარიღი</label>
+                        <input type="date" class="form-control" id="updateDateOfBirth" name="DateOfBirth" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">შენახვა</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

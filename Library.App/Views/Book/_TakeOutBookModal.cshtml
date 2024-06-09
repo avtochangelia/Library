@@ -1,0 +1,21 @@
+﻿<div id="takeOutBookModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">გაიტანე წიგნი</h5>
+                <button id="cancelTakeOutBook" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-action="TakeOut">
+                <div class="modal-body">
+                    <p>დარწმუნებული ხართ, რომ გსურთ ამ წიგნის გატანა?</p>
+                    <input type="hidden" id="takeOutBookId" name="Id" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">დადასტურება</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
